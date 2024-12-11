@@ -11,20 +11,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Installer l'extension GD pour PHP
-    - name: Install GD extension
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libgd-dev
-        sudo apt-get install -y php-gd
-
-    # Étape 3 : Installer les dépendances via Composer
+    # Étape 2 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
       run: bin/composer install
 
-    # Étape 4 : Exécuter les tests avec PHPUnit
+    # Étape 3 : Exécuter les tests avec PHPUnit
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        phpunit: ./vendor/bin/phpunit
-        args: tst
+        vendored_phpunit_path: ./vendor/bin/phpunit  # Spécifie le chemin vers PHPUnit
+        args: tst  # Spécifie le dossier de tests à exécuter
