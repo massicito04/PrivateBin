@@ -29,9 +29,13 @@ jobs:
     - name: Install dependencies
       run: php composer.phar install
 
-    # Étape 5 : Exécuter PHPUnit avec la configuration correcte
+    # Étape 5 : Vérifier si PHPUnit est bien installé
+    - name: Verify PHPUnit installation
+      run: ./vendor/bin/phpunit --version
+
+    # Étape 6 : Exécuter PHPUnit avec la configuration correcte
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        vendored_phpunit_path: ./vendor/bin/phpunit
-        args: tst
+        phpunit_bin: ./vendor/bin/phpunit # Spécifie le chemin vers PHPUnit
+        args: tst # Spécifie les tests à exécuter (dossier tst)
