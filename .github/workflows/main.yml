@@ -1,41 +1,29 @@
-name: CI Workflow for PrivateBin
+name: CI
 
-on:
-  push:
+on: 
+  push: # Exécute la CI pour chaque push
     branches:
-      - main  # Lance la CI lors des commits sur la branche 'main'
-  pull_request:
+      - main # Sur la branche principale
+  pull_request: # Exécute aussi la CI pour les PRs
     branches:
-      - main  # Lance la CI pour les pull requests vers 'main'
+      - main
 
 jobs:
-  test:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Checkout du code
-      - name: Checkout code
-        uses: actions/checkout@v3
+    # Étape 1 : Checkout du code source
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Étape 2 : Installer et configurer PHP
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1' # Spécifiez la version de PHP
-          extensions: mbstring, xml, dom
-          coverage: none # Pas besoin d'outils de couverture ici
-          tools: composer # Ajoute Composer pour l'installation des dépendances
+    # Étape 2 : Installer les dépendances via Composer avec php-actions
+    - name: Install dependencies
+      uses: php-actions/composer@v6
 
-      # Étape 3 : Vérifier que Make est installé (optionnel)
-      - name: Ensure Make is available
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y make
-
-      # Étape 4 : Installer les dépendances avec Makefile
-      - name: Install dependencies
-        run: bin/composer install
-
-      # Étape 5 : Lancer les tests avec Makefile
-      - name: Run tests
-        run: ./vendor/bin/phpunit tst
+    # Étape 3 : Lancer les tests PHPUnit via php-actions
+    - name: Run PHPUnit tests
+      uses: php-actions/phpunit@v3
+      with:
+        phpunit: ./vendor/bin/phpunit # Appelle votre binaire PHPUnit
+        args: tst # Passe "tst" comme argument pour exécuter vos tests
