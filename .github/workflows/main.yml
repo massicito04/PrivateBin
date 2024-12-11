@@ -1,12 +1,12 @@
 name: CI
 
 on: 
-  push: # Exécute la CI pour chaque push
+  push: 
     branches:
-      - main # Sur la branche principale
-  pull_request: # Exécute aussi la CI pour les PRs
+      - main # Exécute sur les pushes vers la branche main
+  pull_request: 
     branches:
-      - main
+      - main # Exécute sur les PRs vers la branche main
 
 jobs:
   build-test:
@@ -17,13 +17,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Installer les dépendances via Composer avec php-actions
-    - name: Install dependencies
+    # Étape 2 : Installer les dépendances avec une action GitHub personnalisée
+    - name: Install dependencies with Composer
       uses: php-actions/composer@v6
+      with:
+        command: bin/composer install # Spécifie votre commande personnalisée
 
-    # Étape 3 : Lancer les tests PHPUnit via php-actions
+    # Étape 3 : Exécuter PHPUnit avec une action GitHub
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        phpunit: ./vendor/bin/phpunit # Appelle votre binaire PHPUnit
-        args: tst # Passe "tst" comme argument pour exécuter vos tests
+        phpunit: ./vendor/bin/phpunit # Spécifie le chemin de PHPUnit
+        args: tst # Dossier des tests
