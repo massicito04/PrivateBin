@@ -11,15 +11,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    # Étape 2 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
       uses: php-actions/composer@v6
-      with: 
-        dependancies_install: bin/composer
-        args: install
+      with:
+        php_version: '8.1'  # Exemple de version PHP (ajuste si nécessaire)
+        args: install  # On passe directement les arguments à Composer
 
     # Étape 3 : Exécuter les tests avec PHPUnit
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        vendored_phpunit_path: ./vendor/bin/phpunit  
-        args: tst  
+        vendored_phpunit_path: ./vendor/bin/phpunit  # Le chemin vers PHPUnit
+        args: tst  # Le répertoire des tests à exécuter
