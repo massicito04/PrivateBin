@@ -11,10 +11,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
-      run: bin/composer install
+      uses: php-actions/composer@v6
+      with: 
+        dependancies_install: bin/composer
+        args: install
 
     # Étape 3 : Exécuter les tests avec PHPUnit
     - name: Run PHPUnit tests
-      run: ./vendor/bin/phpunit tst
+      uses: php-actions/phpunit@v3
+      with:
+        vendored_phpunit_path: ./vendor/bin/phpunit  
+        args: tst  
