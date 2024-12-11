@@ -23,7 +23,11 @@ jobs:
         php_version: '8.1'  # Choisir la version PHP appropriée si nécessaire
         dev: yes  # Inclure les dépendances de développement si nécessaire
 
-    # Étape 4 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
+    # Étape 4 : Donner les permissions 755 à phpunit
+    - name: Set permissions for phpunit
+      run: chmod -R 755 ./vendor/bin/phpunit
+
+    # Étape 5 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
       with:
