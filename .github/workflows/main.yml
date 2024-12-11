@@ -23,9 +23,13 @@ jobs:
         php_version: '8.1'  # Choisir la version PHP appropriée si nécessaire
         dev: yes  # Inclure les dépendances de développement si nécessaire
 
-    # Étape 4 : Exécuter les tests avec PHPUnit
+    # Étape 4 : Donner les bonnes permissions à PHPUnit
+    - name: Set permissions for PHPUnit
+      run: chmod +x ./vendor/bin/phpunit  # Assurer que le fichier phpunit est exécutable
+
+    # Étape 5 : Exécuter les tests avec PHPUnit
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        vendored_phpunit_path: ./vendor/bin/phpunit
-        args: tst
+        vendored_phpunit_path: ./vendor/bin/phpunit  # Chemin vers PHPUnit
+        args: tst  # Dossier contenant les tests à exécuter
