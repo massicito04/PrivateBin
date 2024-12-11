@@ -8,14 +8,14 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v8.2
+      uses: actions/checkout@v6
       
     - name: Install dependencies with Composer
       run: bin/composer install
 
       
     - name: Run PHPUnit tests
-      uses: php-actions/phpunit@v7.4
+      uses: php-actions/phpunit@v3
       with:
         phpunit: ./vendor/bin/phpunit
         args: tst
