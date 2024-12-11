@@ -21,7 +21,7 @@ jobs:
       with:
         command: install  # Utiliser "command" pour dire à Composer ce que faire
         php_version: '8.1'  # Choisir la version PHP appropriée si nécessaire
-        dev: true  # Inclure les dépendances de développement si nécessaire
+        dev: yes  # Inclure les dépendances de développement si nécessaire
 
     # Étape 4 : Exécuter les tests avec PHPUnit
     - name: Run PHPUnit tests
