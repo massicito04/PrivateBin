@@ -1,0 +1,41 @@
+name: CI Workflow for PrivateBin
+
+on:
+  push:
+    branches:
+      - main  # Lance la CI lors des commits sur la branche 'main'
+  pull_request:
+    branches:
+      - main  # Lance la CI pour les pull requests vers 'main'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Checkout du code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installer et configurer PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1' # Spécifiez la version de PHP
+          extensions: mbstring, xml, dom
+          coverage: none # Pas besoin d'outils de couverture ici
+          tools: composer # Ajoute Composer pour l'installation des dépendances
+
+      # Étape 3 : Vérifier que Make est installé (optionnel)
+      - name: Ensure Make is available
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make
+
+      # Étape 4 : Installer les dépendances avec Makefile
+      - name: Install dependencies
+        run: bin/composer install
+
+      # Étape 5 : Lancer les tests avec Makefile
+      - name: Run tests
+        run: ./vendor/bin/phpunit tst
