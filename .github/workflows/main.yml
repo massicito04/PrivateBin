@@ -29,9 +29,9 @@ jobs:
     - name: Install dependencies
       run: php composer.phar install
 
-    # Étape 5 : Exécuter PHPUnit avec une action GitHub
+    # Étape 5 : Exécuter PHPUnit avec la configuration correcte
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        phpunit: ./vendor/bin/phpunit
+        vendored_phpunit_path: ./vendor/bin/phpunit
         args: tst
