@@ -13,14 +13,11 @@ jobs:
 
     # Étape 2 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
-      uses: php-actions/composer@v6
-      with:
-        php_version: '8.1'  # Exemple de version PHP (ajuste si nécessaire)
-        args: install  # On passe directement les arguments à Composer
+      run: bin/composer install  # Utilisation de bin/composer install pour installer les dépendances
 
     # Étape 3 : Exécuter les tests avec PHPUnit
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        vendored_phpunit_path: ./vendor/bin/phpunit  # Le chemin vers PHPUnit
+        vendored_phpunit_path: ./vendor/bin/phpunit  # Le chemin vers PHPUnit dans le dossier vendor
         args: tst  # Le répertoire des tests à exécuter
