@@ -11,17 +11,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Installer les dépendances avec Composer
+    # Étape 2 : Fixer le problème de sécurité Git (répertoire douteux)
+    - name: Git safe directory
+      run: git config --global --add safe.directory /github/workspace
+
+    # Étape 3 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
       uses: php-actions/composer@v6
       with:
-        args: install  # Installation des dépendances via Composer
+        command: install  # Utiliser "command" pour dire à Composer ce que faire
+        php_version: '8.1'  # Choisir la version PHP appropriée si nécessaire
+        dev: true  # Inclure les dépendances de développement si nécessaire
 
-    # Étape 3 : Exécuter les tests avec PHPUnit
+    # Étape 4 : Exécuter les tests avec PHPUnit
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        # Spécifie le chemin où PHPUnit est installé
         vendored_phpunit_path: ./vendor/bin/phpunit
-        # Répertoire des tests à exécuter
         args: tst
