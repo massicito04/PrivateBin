@@ -3,10 +3,10 @@ name: CI
 on: 
   push: 
     branches:
-      - main # Exécute sur les pushes vers la branche main
+      - main
   pull_request: 
     branches:
-      - main # Exécute sur les PRs vers la branche main
+      - main
 
 jobs:
   build-test:
@@ -17,15 +17,21 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Installer les dépendances avec une action GitHub personnalisée
-    - name: Install dependencies with Composer
-      uses: php-actions/composer@v6
-      with:
-        command: bin/composer install # Spécifie votre commande personnalisée
+    # Étape 2 : Fixer les problèmes de propriété douteuse (Git)
+    - name: Fix Git ownership issues
+      run: git config --global --add safe.directory /app
 
-    # Étape 3 : Exécuter PHPUnit avec une action GitHub
+    # Étape 3 : Installer Composer si nécessaire
+    - name: Install Composer locally
+      run: php -r "copy('https://getcomposer.org/composer.phar', 'composer.phar');"
+
+    # Étape 4 : Installer les dépendances via votre binaire local
+    - name: Install dependencies
+      run: php composer.phar install
+
+    # Étape 5 : Exécuter PHPUnit avec une action GitHub
     - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        phpunit: ./vendor/bin/phpunit # Spécifie le chemin de PHPUnit
-        args: tst # Dossier des tests
+        phpunit: ./vendor/bin/phpunit
+        args: tst
