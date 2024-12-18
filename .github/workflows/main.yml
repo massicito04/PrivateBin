@@ -11,39 +11,25 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Configurer PHP et activer les extensions nécessaires
-    - name: Set up PHP
+    # Étape 2 : Configurer PHP avec la version souhaitée et installer les extensions nécessaires
+    - name: Setup PHP with required extensions
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'
         extensions: |
-          gd
-          xdebug
+          gd         
+          xdebug     
         ini-values: |
           memory_limit=128M
-        tools: composer
+        tools: composer # Installer Composer automatiquement
 
     # Étape 3 : Installer les dépendances via Composer
     - name: Install dependencies with Composer
-      run: composer install --no-interaction --prefer-dist
+      run: composer install --no-dev # Installer les dépendances, sans celles de dev si non nécessaires
 
-    # Étape 4 : Vérifier les extensions activées
-    - name: Verify GD and Xdebug extensions
-      run: |
-        php -m | grep -i gd
-        php -m | grep -i xdebug
-
-    # Étape 5 : Exécuter PHPUnit avec les extensions PHP activées
+    # Étape 4 : Exécuter les tests PHPUnit en activant les extensions PHP nécessaires
     - name: PHPUnit tests
       uses: php-actions/phpunit@v3
       with:
-        php_extensions: "gd, xdebug" # Activer les extensions GD et Xdebug
-        coverage_clover: "coverage/clover.xml" # Générer un fichier de couverture
-
-    # Étape 6 : Vérifier la couverture de code
-    - name: Upload code coverage
-      if: success()
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report
-        path: coverage/clover.xml
+        php_extensions: "gd, xdebug" # Extensions activées pour PHPUnit
+        coverage_clover: "coverage/clover.xml" # Générer un fichier coverage
