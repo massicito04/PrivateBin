@@ -11,6 +11,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    # Étape 2 : Installer PHP et ses extensions nécessaires
+    - name: Set up PHP
+      uses: php-actions/phpunit@v3
+      with:
+        php-extensions: "xdebug"
+        ini-values: |
+          memory_limit=128M # Configurer des valeurs dans le fichier php.ini
+
     # Étape 3 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
       uses: php-actions/composer@v6
@@ -18,8 +26,11 @@ jobs:
         command: install  # Utiliser "command" pour dire à Composer ce que faire
         php_version: '8.1'  # Choisir la version PHP appropriée si nécessaire
         dev: yes  # Inclure les dépendances de développement si nécessaire
+        
+    # Étape 4 : Vérifier que GD est bien actif
+    - name: Verify GD Extension
+      run: php -m | grep gd # Confirmer que l'extension GD est bien activée
 
-
-    # Étape 5 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
-    - name: Run PHPUnit tests with php-actions/phpunit
+    # Étape 5 : Exécuter les tests avec PHPUnit
+    - name: Run PHPUnit tests
       uses: php-actions/phpunit@v3
