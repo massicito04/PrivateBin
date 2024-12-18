@@ -16,8 +16,6 @@ jobs:
       uses: php-actions/phpunit@v3
       with:
         php-extensions: "gd, xdebug"
-        ini-values: |
-          memory_limit=128M # Configurer des valeurs dans le fichier php.ini
 
     # Étape 3 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
