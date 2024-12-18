@@ -1,9 +1,10 @@
+
 name: CI
 
 on: [push]
 
 jobs:
-  unit-tests:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -11,21 +12,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Configurer PHP avec la version souhaitée et installer les extensions nécessaires
-    - name: Setup PHP with required extensions
-      uses: shivammathur/setup-php@v2
-      with:
-        php_extensions: "gd, xdebug"
-        coverage_clover: "coverage/clover.xml"
-
-
-    # Étape 3 : Installer les dépendances via Composer
+    # Étape 3 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
-      run: composer install --no-dev # Installer les dépendances, sans celles de dev si non nécessaires
+      uses: php-actions/composer@v6
+      with:
+        command: install  # Utiliser "command" pour dire à Composer ce que faire
+        php_version: '8.1'  # Choisir la version PHP appropriée si nécessaire
+        dev: yes  # Inclure les dépendances de développement si nécessaire
 
-    # Étape 4 : Exécuter les tests PHPUnit en activant les extensions PHP nécessaires
-    - name: PHPUnit tests
+    - name: Install extention
       uses: php-actions/phpunit@v3
       with:
-        php_extensions: "gd, xdebug" # Extensions activées pour PHPUnit
-        coverage_clover: "coverage/clover.xml" # Générer un fichier coverage
+        php_extensions: "xdebug"
+
+    # Étape 5 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
+    - name: Run PHPUnit tests with php-actions/phpunit
+      uses: php-actions/phpunit@v3
