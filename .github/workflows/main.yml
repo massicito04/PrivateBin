@@ -15,7 +15,7 @@ jobs:
     - name: Set up PHP
       uses: php-actions/phpunit@v3
       with:
-        php-extensions: "xdebug"
+        php-extensions: "gd, xdebug"
         ini-values: |
           memory_limit=128M # Configurer des valeurs dans le fichier php.ini
 
