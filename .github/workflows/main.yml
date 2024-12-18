@@ -26,5 +26,5 @@ jobs:
       with:
         version: 9.6.2
         php_version: "8.2"
-        php_extensions: "pdo pdo_mysql gd zip"
-      
+        php_extensions: "pdo gd xdebug"
+        coverage_text: "coverage/clover.txt"
