@@ -32,5 +32,4 @@ jobs:
       with:
         filename: coverage.cobertura.xml
         format: markdown
-        outputfile: file
 
