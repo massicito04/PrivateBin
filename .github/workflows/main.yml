@@ -32,6 +32,8 @@ jobs:
       with:
         filename: coverage.cobertura.xml
         format: markdown
-      run: echo "{markdown content}" >> $GITHUB_STEP_SUMMARY
+        output: file{md_coverage}
     
+    - name: Adding markdown
+      run: echo {md_coverage} >> $GITHUB_STEP_SUMMARY    
 
