@@ -14,7 +14,7 @@ jobs:
 
     # Étape 3 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
-      uses: php-actions/composer@v6
+      uses: php-actions/composer@v6 
       with:
         command: install  # Utiliser "command" pour dire à Composer ce que faire
         php_version: '8.1'  # Choisir la version PHP appropriée si nécessaire
@@ -23,8 +23,12 @@ jobs:
     - name: Install extention
       uses: php-actions/phpunit@v3
       with:
+
         php_extensions: "gd"
 
     # Étape 5 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
+      with:
+        version: "9.6.2"
+        memory_limit: "256M"
