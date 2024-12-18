@@ -8,11 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Étape 1 : Checkout du code source
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 3 : Installer les dépendances avec Composer
     - name: Install dependencies with Composer
       uses: php-actions/composer@v6 
       with:
@@ -20,7 +18,6 @@ jobs:
         php_version: '8.2'  # Choisir la version PHP appropriée si nécessaire
         dev: yes  # Inclure les dépendances de développement si nécessaire
  
-    # Étape 5 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
       with:
@@ -29,4 +26,10 @@ jobs:
         php_extensions: "pdo gd xdebug"
       env:
         XDEBUG_MODE: coverage
+
+    - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage/**/coverage.cobertura.xml
+        format: markdown
         
