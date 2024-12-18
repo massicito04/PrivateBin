@@ -25,6 +25,5 @@ jobs:
       uses: php-actions/phpunit@v3
       with:
         version: 9.6.2
-        php_extensions: "pdo gd xdebug"
-        coverage_clover: "coverage/clover.xml"
+        php_extensions: "pdo pdo_mysql gd zip"
         memory_limit: 256M
