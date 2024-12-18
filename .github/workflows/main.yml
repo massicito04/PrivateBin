@@ -23,9 +23,8 @@ jobs:
     - name: Install extention
       uses: php-actions/phpunit@v3
       with:
-
-        php_extensions: "gd"
-
+        php_extensions: "gd,xdebug"
+ 
     # Étape 5 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
