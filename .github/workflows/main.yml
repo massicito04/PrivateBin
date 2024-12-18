@@ -23,6 +23,3 @@ jobs:
     # Étape 5 : Exécuter les tests avec PHPUnit via l'action php-actions/phpunit
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
-      with:
-        vendored_phpunit_path: ./vendor/bin/phpunit  # Le chemin vers PHPUnit
-        args: tst  # Le répertoire des tests à exécuter
