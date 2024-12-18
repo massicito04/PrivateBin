@@ -35,5 +35,5 @@ jobs:
         output: file  
     
     - name: Adding markdown
-      run: echo {md_coverage} >> $GITHUB_STEP_SUMMARY    
+      run: echo Hello >> $GITHUB_STEP_SUMMARY    
 
