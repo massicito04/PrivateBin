@@ -24,6 +24,6 @@ jobs:
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
       with:
-        version: "9.6.2"
-        php_extensions: "gd,pdo"
-        memory_limit: "256M"
+        version: 9.6.2
+        php_extensions: gd, pdo
+        memory_limit: 256M
