@@ -1,22 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="Custom ruleset">
+<ruleset name="Minimal ruleset">
     <description>
-        Mes règles personnalisées pour PHPMD.
+        Minimal ruleset for testing.
     </description>
 
-    <!-- Activer certaines règles -->
     <rule ref="rulesets/cleancode.xml"/>
-    <rule ref="rulesets/codesize.xml"/>
-
-    <!-- Ajouter des règles spécifiques -->
-    <rule ref="rulesets/design.xml/CouplingBetweenObjects">
-        <properties>
-            <property name="minimum" value="15"/>
-        </properties>
-    </rule>
-
-    <!-- Désactiver certaines règles -->
-    <rule ref="rulesets/design.xml/TooManyFields">
-        <exclude name="MyExcludedClass"/>
-    </rule>
 </ruleset>
