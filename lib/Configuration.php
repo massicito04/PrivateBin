@@ -180,9 +180,11 @@ class Configuration
             }
 
             // "*_options" sections don't require all defaults to be set
+            $from = strlen($section) - strlen($opts);
+
             if (
                 $section !== 'model_options' &&
-                ($from = strlen($section) - strlen($opts)) >= 0 &&
+                $from >= 0 &&
                 strpos($section, $opts, $from) !== false
             ) {
                 if (is_int(current($values))) {
