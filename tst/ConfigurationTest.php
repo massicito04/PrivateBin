@@ -2,13 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 use PrivateBin\Configuration;
-use PrivateBin\Helper;
-
 
 class ConfigurationTest extends TestCase
 {
-    private $helper;
-
+    
     private $_minimalConfig;
 
     private $_options;
@@ -17,19 +14,12 @@ class ConfigurationTest extends TestCase
 
     public function setUp(): void
     {
-        // Crée une instance de Helper
-        $this->helper = new Helper();
-        
-        // Utilise l'instance pour appeler confBackup()
-        $this->helper->confBackup();
-        
-        // Initialisation des autres variables
+        /* Setup Routine */
+        Helper::confBackup();
         $this->_minimalConfig                   = '[main]' . PHP_EOL . '[model]' . PHP_EOL . '[model_options]';
         $this->_options                         = Configuration::getDefaults();
         $this->_options['model_options']['dir'] = PATH . $this->_options['model_options']['dir'];
         $this->_path                            = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'privatebin_cfg';
-
-        // Crée le répertoire si nécessaire
         if (!is_dir($this->_path)) {
             mkdir($this->_path);
         }
