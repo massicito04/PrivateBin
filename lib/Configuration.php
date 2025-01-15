@@ -193,7 +193,7 @@ class Configuration
                 }
                 $this->_configuration[$section] = $config[$section];
             }
-            // check for missing keys and set defaults if necessary
+            // check for missing keys and set defaults if necessary 
             else {
                 foreach ($values as $key => $val) {
                     if ($key == 'dir') {
