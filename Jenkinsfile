@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         PHP_VERSION = '8.1'
+        DISTRIB_CODENAME = 'bookworm' // Remplacer par la version exacte de Debian si nécessaire
     }
     
     stages {
@@ -20,16 +21,7 @@ pipeline {
                     sudo apt update
                     sudo apt install -y lsb-release ca-certificates apt-transport-https software-properties-common
                     
-                    # Récupérer le codename de la distribution Debian
-                    DISTRIB_CODENAME=$(lsb_release -sc)
-
-                    # Vérifier que nous avons bien récupéré un codename valide
-                    if [ -z "$DISTRIB_CODENAME" ]; then
-                      echo "Erreur: Impossible de récupérer le codename de la distribution"
-                      exit 1
-                    fi
-
-                    # Ajouter le dépôt PHP avec le codename correct
+                    # Ajout du dépôt PHP en utilisant le codename explicite
                     sudo add-apt-repository -y "deb https://packages.sury.org/php/ $DISTRIB_CODENAME main"
                     
                     # Ajouter la clé de sécurité pour le dépôt
