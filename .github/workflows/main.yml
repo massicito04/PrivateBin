@@ -11,11 +11,11 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Install dependencies with Composer
-      uses: php-actions/composer@v6 
+      uses: php-actions/composer@v6
       with:
-        command: install  
-        php_version: '8.2' 
-        dev: yes 
+        command: install
+        php_version: '8.2'
+        dev: yes
 
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
@@ -41,3 +41,8 @@ jobs:
         indicators: true
         output: both
         thresholds: '60 80'
+
+    - name: Add Code Coverage to GitHub Summary
+      run: |
+        cat coverage-results.md >> $GITHUB_STEP_SUMMARY
+      if: success()
