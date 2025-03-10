@@ -21,6 +21,6 @@ jobs:
     - name: Run PHPMD (Mess Detector)
       uses: php-actions/phpmd@v1
       with:
-        rules: cleancode,unusedcode,naming
-        report_format: text
         path: lib
+        ruleset: cleancode,unusedcode,naming
+        report_format: text
