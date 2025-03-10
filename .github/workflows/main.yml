@@ -27,7 +27,7 @@ jobs:
         XDEBUG_MODE: coverage
 
     - name: Run PHPUnit with Cobertura coverage
-      run: vendor/bin/phpunit --coverage-clver coverage.cobertura.xml || true
+      run: vendor/bin/phpunit --coverage-clover coverage.cobertura.xml || true
 
     - name: Generate Code Coverage Summary
       uses: irongut/CodeCoverageSummary@v1.3.0
@@ -39,5 +39,7 @@ jobs:
     - name: Add coverage summary to GitHub Actions Summary
       run: |
         echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
-        cat coverage.cobertura.xml >> $GITHUB_STEP_SUMMARY # Si tu veux inclure le fichier XML dans le summary
-        echo "Markdown coverage summary will appear above!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Test Coverage Report" >> $GITHUB_STEP_SUMMARY
+        cat coverage.cobertura.xml >> $GITHUB_STEP_SUMMARY
+        echo "Coverage summary is above!" >> $GITHUB_STEP_SUMMARY
