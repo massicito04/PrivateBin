@@ -1,29 +1,55 @@
-name: CI
+name: PHP Code Analysis
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: [push, pull_request]
 
 jobs:
-  build-and-test:
+  phpcs:
     runs-on: ubuntu-latest
-
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
 
+    - name: Install dependencies
+      run: composer install --dev
 
-      - name: Install dependencies
-        uses: php-actions/composer@v6
+    - name: Run PHPCS
+      run: vendor/bin/phpcs --standard=PSR12 --ignore=vendor .
 
+  phpmd:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: PHP Mess Detector
-        uses: php-actions/phpmd@v1
-        with:
-          php_version: 8.1
-          path: lib/Configuration.php
-          output: text
-          ruleset: test/phpmd/ruleset.xml
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Install dependencies
+      run: composer install --dev
+
+    - name: Run PHPMD
+      run: vendor/bin/phpmd src text cleancode,unusedcode,naming
+
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Install dependencies
+      run: composer install --dev
+
+    - name: Run PHPStan
+      run: vendor/bin/phpstan analyse src
