@@ -19,7 +19,7 @@ jobs:
       run: composer install --dev
 
     - name: Run PHPCS (Code Sniffer)
-      uses: php-actions/phpcs@v2
+      uses: php-actions/phpcs@v1
       with:
         standard: PSR12
         ignore: vendor
