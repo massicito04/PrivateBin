@@ -19,10 +19,11 @@ jobs:
       run: composer install --dev
 
     - name: Run PHPCS (Code Sniffer)
-      uses: php-actions/phpcs@v3
+      uses: php-actions/phpcs@v2
       with:
         standard: PSR12
         ignore: vendor
+
 
     - name: Run PHPMD (Mess Detector)
       uses: php-actions/phpmd@v2
