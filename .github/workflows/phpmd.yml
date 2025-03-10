@@ -22,9 +22,8 @@ jobs:
       uses: php-actions/phpcs@v1
       with:
         php_version: 8.1
-          php_version: 8.1
-          path: lib/
-          output: text
+        path: lib/
+        output: text
 
 
     - name: Run PHPMD (Mess Detector)
