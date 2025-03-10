@@ -1,4 +1,3 @@
-
 name: CI
 
 on: [push]
@@ -18,7 +17,6 @@ jobs:
         php_version: '8.2' 
         dev: yes 
 
- 
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
       with:
@@ -29,13 +27,17 @@ jobs:
         XDEBUG_MODE: coverage
 
     - name: Run PHPUnit with Cobertura coverage
-      run: vendor/bin/phpunit --coverage-clover coverage.cobertura.xml || true
+      run: vendor/bin/phpunit --coverage-clver coverage.cobertura.xml || true
 
-
-
-    - name: Code Coverage Report
+    - name: Generate Code Coverage Summary
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: coverage.cobertura.xml
         format: markdown
-        output: file    
+        output: file
+
+    - name: Add coverage summary to GitHub Actions Summary
+      run: |
+        echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
+        cat coverage.cobertura.xml >> $GITHUB_STEP_SUMMARY # Si tu veux inclure le fichier XML dans le summary
+        echo "Markdown coverage summary will appear above!" >> $GITHUB_STEP_SUMMARY
