@@ -1,10 +1,11 @@
-name: PHP Code Analysis
+name: PHP Code Quality Check
 
 on: [push, pull_request]
 
 jobs:
-  phpcs:
+  build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -14,42 +15,24 @@ jobs:
       with:
         php-version: '8.2'
 
-    - name: Install dependencies
+    - name: Install dependencies with Composer
       run: composer install --dev
 
-    - name: Run PHPCS
-      run: vendor/bin/phpcs --standard=PSR12 --ignore=vendor .
-
-  phpmd:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
+    - name: Run PHPCS (Code Sniffer)
+      uses: php-actions/phpcs@v3
       with:
-        php-version: '8.2'
+        standard: PSR12
+        ignore: vendor
 
-    - name: Install dependencies
-      run: composer install --dev
-
-    - name: Run PHPMD
-      run: vendor/bin/phpmd src text cleancode,unusedcode,naming
-
-  phpstan:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
+    - name: Run PHPMD (Mess Detector)
+      uses: php-actions/phpmd@v2
       with:
-        php-version: '8.2'
-
-    - name: Install dependencies
-      run: composer install --dev
+        rules: cleancode,unusedcode,naming
+        report_format: text
+        path: src
 
     - name: Run PHPStan
-      run: vendor/bin/phpstan analyse src
+      uses: php-actions/phpstan@v2
+      with:
+        level: max
+        paths: src
