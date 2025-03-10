@@ -19,7 +19,4 @@ jobs:
       uses: php-actions/composer@v6
 
     - name: Run PHPStan
-      uses: php-actions/phpstan@v3
-      with:
-        level: max
-        paths_file: lib
+      run: vendor/bin/phpstan analyse --level=max lib
