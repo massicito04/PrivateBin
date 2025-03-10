@@ -17,6 +17,7 @@ jobs:
         command: install  
         php_version: '8.2' 
         dev: yes 
+
  
     - name: Run PHPUnit tests with php-actions/phpunit
       uses: php-actions/phpunit@v3
@@ -28,7 +29,8 @@ jobs:
         XDEBUG_MODE: coverage
 
     - name: Run PHPUnit with Cobertura coverage
-      run: vendor/bin/phpunit --coverage-clover coverage.cobertura.xml
+      run: vendor/bin/phpunit --coverage-clover coverage.cobertura.xml || true
+
 
 
     - name: Code Coverage Report
@@ -36,4 +38,4 @@ jobs:
       with:
         filename: coverage.cobertura.xml
         format: markdown
-        output: file  
+        output: file    
