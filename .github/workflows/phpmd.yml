@@ -15,14 +15,16 @@ jobs:
       with:
         php-version: '8.2'
 
-    - name: Install dependencies with Composer
-      run: composer install --dev
+    - name: Composer install
+      uses: php-actions/composer@v6
 
     - name: Run PHPCS (Code Sniffer)
       uses: php-actions/phpcs@v1
       with:
-        standard: PSR12
-        ignore: vendor
+        php_version: 8.1
+          php_version: 8.1
+          path: lib/
+          output: text
 
 
     - name: Run PHPMD (Mess Detector)
@@ -30,10 +32,10 @@ jobs:
       with:
         rules: cleancode,unusedcode,naming
         report_format: text
-        path: src
+        path: lib
 
     - name: Run PHPStan
       uses: php-actions/phpstan@v3
       with:
         level: max
-        paths: src
+        paths: lib
