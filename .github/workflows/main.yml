@@ -33,13 +33,11 @@ jobs:
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: coverage.cobertura.xml
+        badge: true
+        fail_below_min: true
         format: markdown
-        output: file
-
-    - name: Add coverage summary to GitHub Actions Summary
-      run: |
-        echo "### Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### Test Coverage Report" >> $GITHUB_STEP_SUMMARY
-        cat coverage.cobertura.xml >> $GITHUB_STEP_SUMMARY
-        echo "Coverage summary is above!" >> $GITHUB_STEP_SUMMARY
+        hide_branch_rate: false
+        hide_complexity: true
+        indicators: true
+        output: both
+        thresholds: '60 80'
